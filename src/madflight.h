@@ -158,14 +158,7 @@ void madflight_setup() {
   led.color(0x0000ff); //turn on blue to signal startup
   led.enabled = false; //do not change state until setup compled
 
-  // BBX - Black Box (execute before delay to start USB-MSC if card is inserted)
-  bbx.config.gizmo = (Cfg::bbx_gizmo_enum)cfg.bbx_gizmo; //the gizmo to use
-  bbx.config.spi_bus = hal_get_spi_bus(cfg.bbx_spi_bus); //SPI bus
-  bbx.config.spi_cs = cfg.pin_bbx_cs; //SPI select pin
-  bbx.config.pin_mmc_dat = cfg.pin_mmc_dat;
-  bbx.config.pin_mmc_clk = cfg.pin_mmc_clk;
-  bbx.config.pin_mmc_cmd = cfg.pin_mmc_cmd;
-  bbx.setup();
+  // THIS IS WHER blackbox used to init
 
   // USB - Start USB-CDC (Serial) and USB-MSC (if sdcard is inserted)
   hal_usb_setup();
@@ -250,6 +243,17 @@ void madflight_setup() {
 
   // HAL - Hardware abstraction layer setup: serial, spi, i2c (see hal.h)
   hal_setup();
+
+
+  // BBX - Black Box (execute before delay to start USB-MSC if card is inserted)
+  bbx.config.gizmo = (Cfg::bbx_gizmo_enum)cfg.bbx_gizmo; //the gizmo to use
+  bbx.config.spi_bus = hal_get_spi_bus(cfg.bbx_spi_bus); //SPI bus
+  bbx.config.spi_cs = cfg.pin_bbx_cs; //SPI select pin
+  bbx.config.pin_mmc_dat = cfg.pin_mmc_dat;
+  bbx.config.pin_mmc_clk = cfg.pin_mmc_clk;
+  bbx.config.pin_mmc_cmd = cfg.pin_mmc_cmd;
+  bbx.setup();
+
 
   // I2C - Show i2c devices
   cli.print_i2cScan(); //print i2c scan
